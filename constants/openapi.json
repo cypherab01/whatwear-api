@@ -12,6 +12,10 @@
     {
       "url": "http://localhost:3000/api",
       "description": "Development server"
+    },
+    {
+      "url": "https://whatwear.abhishekg.info.np/api",
+      "description": "Production server"
     }
   ],
   "tags": [
