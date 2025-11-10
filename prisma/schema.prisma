@@ -7,29 +7,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id         String     @id @default(cuid())
-  name       String?
-  username   String     @unique
-  email      String     @unique
-  password   String
-  categories Category[]
+model users {
+  id       String   @id @default(cuid())
+  name     String?
+  username String   @unique
+  email    String   @unique
+  password String
+  labels   labels[]
 }
 
-model Category {
-  id     String  @id @default(cuid())
-  name   String
-  user   User    @relation(fields: [userId], references: [id])
-  userId String
-  cloths Image[]
+model labels {
+  id      String         @id @default(cuid())
+  name    String
+  user    users          @relation(fields: [user_id], references: [id])
+  user_id String
+  images  label_images[]
 }
 
-model Image {
-  id         String   @id @default(cuid())
-  name       String
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String
-  imageURL   String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model label_images {
+  id       String @id @default(cuid())
+  url      String
+  name     String
+  labels   labels @relation(fields: [label_id], references: [id])
+  label_id String
 }

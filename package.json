@@ -11,7 +11,6 @@
   "dependencies": {
     "@prisma/client": "^6.19.0",
     "@prisma/extension-accelerate": "^2.0.2",
-    "@scalar/nextjs-api-reference": "^0.9.1",
     "@types/jsonwebtoken": "^9.0.10",
     "@uploadthing/react": "^7.3.3",
     "bcryptjs": "^3.0.3",

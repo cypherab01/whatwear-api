@@ -12,19 +12,26 @@ export async function POST(req: Request) {
         { status: 400 }
       );
 
-    console.log("HI");
-    const existing = await prisma.user.findUnique({ where: { email } });
+    const existing = await prisma.users.findUnique({ where: { email } });
     if (existing)
       return NextResponse.json(
         { error: "Email already registered" },
         { status: 400 }
       );
 
-    console.log("BYE");
+    const userNameExists = await prisma.users.findUnique({
+      where: { username },
+    });
+
+    if (userNameExists)
+      return NextResponse.json(
+        { error: "Username already exists" },
+        { status: 409 }
+      );
 
     const hashed = await bcrypt.hash(password, 10);
 
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
       data: { name, email, password: hashed, username },
     });
 
@@ -33,7 +40,6 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (err) {
-    console.error(err);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

@@ -1,14 +1,14 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { getUserId } from "@/utils/getUserId";
 
 export async function GET(req: Request) {
   try {
-    const auth = req.headers.get("authorization");
-    const token = auth?.split(" ")[1];
-    const { userId }: any = jwt.verify(token!, process.env.JWT_SECRET!);
+    const userId = await getUserId(req);
 
-    const user = await prisma.user.findUnique({ where: { id: userId } });
+    const user = await prisma.users.findUnique({ where: { id: userId } });
+
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
