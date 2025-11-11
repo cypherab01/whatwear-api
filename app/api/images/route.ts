@@ -9,14 +9,18 @@ export async function POST(req: Request) {
       where: {
         label_id,
       },
+      select: {
+        id: true,
+        url: true,
+        name: true,
+      },
     });
 
     return NextResponse.json(
-      { images, length: images.length },
+      { images, length: images.length, label_id },
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }

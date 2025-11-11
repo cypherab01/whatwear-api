@@ -12,7 +12,10 @@ export async function GET(req: Request) {
         name: true,
       },
     });
-    return NextResponse.json({ labels }, { status: 200 });
+    return NextResponse.json(
+      { labels, length: labels.length },
+      { status: 200 }
+    );
   } catch (error) {
     if (error instanceof Error)
       return NextResponse.json({ error: error.message }, { status: 401 });
@@ -28,7 +31,7 @@ export async function POST(req: Request) {
     const userId = await getUserId(req);
     const { label } = await req.json();
 
-    const labelDoesExist = await prisma.labels.findMany({
+    const labelDoesExist = await prisma.labels.findFirst({
       where: {
         name: label,
         user_id: userId,

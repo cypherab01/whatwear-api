@@ -9,7 +9,6 @@ export async function uploadServerSideFile(file: File) {
     const response = await utapi.uploadFiles(file);
     return response.data;
   } catch (error) {
-    console.error("Upload failed:", error);
     throw error;
   }
 }
